@@ -1,0 +1,40 @@
+#include <vector>
+
+class Solution {
+public:
+    int findLeftmostIndex(std::vector<int>& nums, int target) {
+        int start = 0;
+        int end = nums.size() - 1;
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] < target) {
+                start = mid + 1;
+            } else {
+                end = mid;
+            }
+        }
+        return nums[start] == target ? start : -1;
+    }
+
+    int findRightmostIndex(std::vector<int>& nums, int target) {
+        int start = 0;
+        int end = nums.size() - 1;
+        while (start < end) {
+            int mid = start + (end - start + 1) / 2; // Use upper mid to favor the right side
+            if (nums[mid] > target) {
+                end = mid - 1;
+            } else {
+                start = mid;
+            }
+        }
+        return nums[start] == target ? start : -1;
+    }
+
+    std::vector<int> searchRange(std::vector<int>& nums, int target) {
+        if (nums.empty()) return {-1, -1};
+        int leftIndex = findLeftmostIndex(nums, target);
+        if (leftIndex == -1) return {-1, -1}; 
+        int rightIndex = findRightmostIndex(nums, target);
+        return {leftIndex, rightIndex};
+    }
+};
