@@ -1,0 +1,57 @@
+std::vector<int> BinaryIntegerAddition(const std::vector<int>& A, const std::vector<int>& B) {
+	int size1 = A.size();
+	int size2 = B.size();
+	int size = std::max(size1, size2) + 1; 
+
+	std::vector<int> C(size, 0);
+	int carry = 0;
+
+	for (int i = size - 1, j = size1 - 1, k = size2 - 1; i >= 0; i--, j--, k--) {
+		int bitA = j >= 0 ? A[j] : 0; 
+		int bitB = k >= 0 ? B[k] : 0;  
+		C[i] = bitA ^ bitB ^ carry;    
+		carry = (bitA & bitB) | (bitA & carry) | (bitB & carry); 
+	}
+
+	return C;
+}
+
+/*
+std::vector<int> BinaryIntegerAddition(const std::vector<int>& A, const std::vector<int>& B) {
+	int carry = 0;
+    	int size1 = A.size();
+    	int size2 = B.size();
+    	int size = std::max(size1, size2) + 1;
+    	int min_index = abs(size1 - size2);
+
+	std::vector<int> C(size, 0);
+	int j = size1 - 1;
+	int g = size2 - 1;
+	int i = size - 1;
+	
+	for (; i > 0; --i) {
+		if (i > min_index) {
+			C[i] = A[j] ^ B[g] ^ carry;
+			if (A[j] & B[g] & carry == 1 || ((A[j] ^ B[g] ^ carry == 0) and (A[j] || B[g] || carry == 1))) {
+				carry = 1;
+			} else {
+				carry = 0;
+			}
+			--j;
+			--g;
+		} else if (j == -1) {
+			C[i] = B[g] ^ carry;
+			carry = B[g] & carry;
+			--g;
+			std::cout << C[i] << " " << carry << std::endl;
+		} else if (g == -1) {
+			C[i] = A[j] ^ carry;
+			carry = A[j] & carry;
+			--j;
+		}
+	}
+
+	C[i] = carry;
+	return C;
+}
+*/
