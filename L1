@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<pair<int,int>> valueAndIndex;
+
+        for (int i = 0; i < nums.size(); ++i) {
+            valueAndIndex.push_back({nums[i],i});
+        }
+
+        std::sort(valueAndIndex.begin(), valueAndIndex.end());
+
+        int i = 0;
+        int j = valueAndIndex.size() - 1;
+        int sum = 0;
+        std::vector<int> result;
+
+        while (i <= j) {
+            sum = 0;
+            sum += valueAndIndex[i].first;
+            sum += valueAndIndex[j].first;
+            if (sum < target) { ++i; }
+            else if (sum > target) { --j; }
+            else {
+                result.push_back(valueAndIndex[i].second);
+                result.push_back(valueAndIndex[j].second);
+                return result;
+            }
+        }
+        return result;
+    }
+};
